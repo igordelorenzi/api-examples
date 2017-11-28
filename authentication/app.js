@@ -44,8 +44,8 @@ app.get('/login', function(req, res) {
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  var scope = 'user-read-private user-read-email';
-  res.redirect('https://api.contaazul.com/authorize?' +
+  var scope = 'sales';
+  res.redirect('https://api.contaazul.com/auth/authorize?' +
     querystring.stringify({
       response_type: 'code',
       client_id: client_id,
@@ -72,7 +72,7 @@ app.get('/callback', function(req, res) {
   } else {
     res.clearCookie(stateKey);
     var authOptions = {
-      url: 'https://api.contaazul.com/api/token',
+      url: 'https://api.contaazul.com/oauth2/token',
       form: {
         code: code,
         redirect_uri: redirect_uri,
