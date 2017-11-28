@@ -12,9 +12,9 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = '6fc7b7828c0f47fc9d50a700edbce30e'//'CLIENT_ID'; // Your client id
-var client_secret = '4e28352e555a4e8f9cb27cb4f973ce74'//'CLIENT_SECRET'; // Your secret
-var redirect_uri = 'https://9a1cc67c.ngrok.io/callback'//'REDIRECT_URI'; // Your redirect uri
+var client_id = 'CLIENT_ID'; // Your client id
+var client_secret = 'CLIENT_SECRET'; // Your secret
+var redirect_uri = 'REDIRECT_URI'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -93,9 +93,8 @@ app.get('/callback', function(req, res) {
 
       var access_token = body.access_token,
           refresh_token = body.refresh_token;
-      console.log('AccessToken2: '+ access_token);
 
-      var options = {
+          var options = {
         url: 'https://api.contaazul.com/v1/me',
         headers: { 'Authorization': 'Bearer ' + access_token },
         json: true
