@@ -12,9 +12,9 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = 'CLIENT_ID'; // Your client id
-var client_secret = 'CLIENT_SECRET'; // Your secret
-var redirect_uri = 'REDIRECT_URI'; // Your redirect uri
+var client_id = '6fc7b7828c0f47fc9d50a700edbce30e'//'CLIENT_ID'; // Your client id
+var client_secret = '4e28352e555a4e8f9cb27cb4f973ce74'//'CLIENT_SECRET'; // Your secret
+var redirect_uri = 'https://9a1cc67c.ngrok.io/callback'//'REDIRECT_URI'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -55,6 +55,10 @@ app.get('/login', function(req, res) {
     }));
 });
 
+function newHeaderBasic(client_id, client_secret){
+  return 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+}
+
 app.get('/callback', function(req, res) {
 
   // your application requests refresh and access tokens
@@ -79,34 +83,35 @@ app.get('/callback', function(req, res) {
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        'Authorization': newHeaderBasic(client_id, client_secret)
       },
       json: true
-    };
+  };
 
-    request.post(authOptions, function(error, response, body) {
-      if (!error && response.statusCode === 200) {
+  request.post(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
 
-        var access_token = body.access_token,
-            refresh_token = body.refresh_token;
+      var access_token = body.access_token,
+          refresh_token = body.refresh_token;
+      console.log('AccessToken2: '+ access_token);
 
-        var options = {
-          url: 'https://api.contaazul.com/v1/me',
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
+      var options = {
+        url: 'https://api.contaazul.com/v1/me',
+        headers: { 'Authorization': 'Bearer ' + access_token },
+        json: true
+      };
 
-        // use the access token to access the contaazul Web API
-        request.get(options, function(error, response, body) {
-          console.log(body);
-        });
+      // use the access token to access the contaazul Web API
+      request.get(options, function(error, response, body) {
+        console.log(body);
+      });
 
-        // we can also pass the token to the browser to make requests from there
-        res.redirect('/#' +
-          querystring.stringify({
-            access_token: access_token,
-            refresh_token: refresh_token
-          }));
+      // we can also pass the token to the browser to make requests from there
+      res.redirect('/#' +
+        querystring.stringify({
+          access_token: access_token,
+          refresh_token: refresh_token
+        }));
       } else {
         res.redirect('/#' +
           querystring.stringify({
@@ -122,8 +127,8 @@ app.get('/refresh_token', function(req, res) {
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
   var authOptions = {
-    url: 'https://api.contaazul.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+    url: 'https://api.contaazul.com/oauth2/token',
+    headers: { 'Authorization': newHeaderBasic(client_id, client_secret) },
     form: {
       grant_type: 'refresh_token',
       refresh_token: refresh_token
@@ -134,8 +139,14 @@ app.get('/refresh_token', function(req, res) {
   request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       var access_token = body.access_token;
+      var refresh_token = body.refresh_token;
       res.send({
-        'access_token': access_token
+        'access_token': access_token,
+        'refresh_token' : refresh_token
+      });
+    } else {
+      res.send({
+        'error' : error
       });
     }
   });

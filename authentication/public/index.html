@@ -23,7 +23,8 @@
         <a href="/login" class="btn btn-primary">Log in with ContaAzul</a>
       </div>
       <div id="loggedin">
-        <h2>Ok - loggedIn</h2>
+        <div id="oauth">
+        </div>
         <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
       </div>
     </div>
@@ -40,7 +41,6 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script>
       (function() {
-
         /**
          * Obtains parameters from the hash of the URL
          * @return Object
@@ -58,39 +58,27 @@
         var oauthSource = document.getElementById('oauth-template').innerHTML,
             oauthTemplate = Handlebars.compile(oauthSource),
             oauthPlaceholder = document.getElementById('oauth');
-
         var params = getHashParams();
-
         var access_token = params.access_token,
             refresh_token = params.refresh_token,
             error = params.error;
-
         if (error) {
           alert('There was an error during the authentication');
         } else {
+          console.log('Access Token : ' + access_token);
           if (access_token) {
             // render oauth info
             oauthPlaceholder.innerHTML = oauthTemplate({
               access_token: access_token,
               refresh_token: refresh_token
             });
-
-            $.ajax({
-                url: 'https://api.contaazul.com/v1/me',
-                headers: {
-                  'Authorization': 'Bearer ' + access_token
-                },
-                success: function(response) {
-                  $('#login').hide();
-                  $('#loggedin').show();
-                }
-            });
+            $('#login').hide();
+            $('#loggedin').show();
           } else {
               // render initial screen
               $('#login').show();
               $('#loggedin').hide();
           }
-
           document.getElementById('obtain-new-token').addEventListener('click', function() {
             $.ajax({
               url: '/refresh_token',
@@ -98,11 +86,16 @@
                 'refresh_token': refresh_token
               }
             }).done(function(data) {
-              access_token = data.access_token;
-              oauthPlaceholder.innerHTML = oauthTemplate({
-                access_token: access_token,
-                refresh_token: refresh_token
-              });
+              if( data.error ){
+                console.log('ERRO ' + data.error);
+              }else {
+                access_token = data.access_token;
+                refresh_token = data.refresh_token;
+                oauthPlaceholder.innerHTML = oauthTemplate({
+                  access_token: access_token,
+                  refresh_token: refresh_token
+                });
+              }
             });
           }, false);
         }
