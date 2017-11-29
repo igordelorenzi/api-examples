@@ -31,6 +31,10 @@ var generateRandomString = function(length) {
   return text;
 };
 
+var generateHeaderBasic = function (client_id, client_secret){
+  return 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+};
+
 var stateKey = 'contaazul_auth_state';
 
 var app = express();
@@ -47,7 +51,6 @@ app.get('/login', function(req, res) {
   var scope = 'sales';
   res.redirect('https://api.contaazul.com/auth/authorize?' +
     querystring.stringify({
-      response_type: 'code',
       client_id: client_id,
       scope: scope,
       redirect_uri: redirect_uri,
@@ -55,9 +58,7 @@ app.get('/login', function(req, res) {
     }));
 });
 
-function newHeaderBasic(client_id, client_secret){
-  return 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-}
+
 
 app.get('/callback', function(req, res) {
 
@@ -83,7 +84,7 @@ app.get('/callback', function(req, res) {
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': newHeaderBasic(client_id, client_secret)
+        'Authorization': generateHeaderBasic(client_id, client_secret)
       },
       json: true
   };
@@ -92,15 +93,14 @@ app.get('/callback', function(req, res) {
     if (!error && response.statusCode === 200) {
 
       var access_token = body.access_token,
-          refresh_token = body.refresh_token;
+          refresh_token = body.refresh_token,
+          options = {
+            url: 'https://api.contaazul.com/v1/customers?page=0&size=5',
+            headers: { 'Authorization': 'Bearer ' + access_token },
+            json: true
+          };
 
-          var options = {
-        url: 'https://api.contaazul.com/v1/me',
-        headers: { 'Authorization': 'Bearer ' + access_token },
-        json: true
-      };
-
-      // use the access token to access the contaazul Web API
+      // use the access token to access the ContaAzul API
       request.get(options, function(error, response, body) {
         console.log(body);
       });
@@ -127,7 +127,7 @@ app.get('/refresh_token', function(req, res) {
   var refresh_token = req.query.refresh_token;
   var authOptions = {
     url: 'https://api.contaazul.com/oauth2/token',
-    headers: { 'Authorization': newHeaderBasic(client_id, client_secret) },
+    headers: { 'Authorization': generateHeaderBasic(client_id, client_secret) },
     form: {
       grant_type: 'refresh_token',
       refresh_token: refresh_token
