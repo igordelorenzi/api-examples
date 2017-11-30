@@ -1,4 +1,4 @@
-# ContaAzul authentication example - Node.js
+# ContaAzul authorization example - Node.js
 
 ## Getting started
 
