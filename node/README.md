@@ -36,4 +36,4 @@ This example uses some dependencies to assist some steps :
   - cookie-parser : used to store and retrieve information on the browser's cookies
   - express : used to start a node web server
   - querystring : used to transform js objects to url params
-  - request : used to make request to the ContaAzul API
+  - request : used to make requests to the ContaAzul API
