@@ -13,6 +13,7 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
 var auth = require('./app/auth.js');
+var product = require('./app/product.js');
 
 var client_id = 'CLIENT_ID'; // Your client id
 var client_secret = 'CLIENT_SECRET'; // Your secret
@@ -30,6 +31,8 @@ app.get('/login', auth.authorize);
 app.get('/callback', auth.callback);
 
 app.get('/refresh_token', auth.refreshToken);
+
+app.get('/list_products', product.list);
 
 console.log('Listening on 8888');
 app.listen(8888);

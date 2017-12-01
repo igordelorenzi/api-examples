@@ -11,7 +11,7 @@ This command will download all the dependencies required by this example.
 
 ## Configuring
 
-Before running the example you must change your credentials in the `app.js` file.
+Before running the example you must change your credentials in the `app/app.js` file.
 The variables that must be filled with your information are :
 
  - client_id

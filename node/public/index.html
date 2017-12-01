@@ -3,29 +3,20 @@
   <head>
     <title>Authorization Code with ContaAzul</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <style type="text/css">
-      #login, #loggedin {
-        display: none;
-      }
-      .text-overflow {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 500px;
-      }
-    </style>
+    <link rel="stylesheet" href="./index.css">
   </head>
 
   <body>
     <div class="container">
-      <div id="login">
+      <div id="login" class="row">
         <h1>This is an example of the Authorization Code flow</h1>
         <a href="/login" class="btn btn-primary">Log in with ContaAzul</a>
       </div>
       <div id="loggedin">
-        <div id="oauth">
-        </div>
-        <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+        <div id="oauth"></div>
+        <button class="btn btn-default" id="obtain-new-token">Refresh token</button>
+
+        <div id="products"></div>
       </div>
     </div>
 
@@ -33,9 +24,30 @@
       <h2>oAuth info</h2>
       <dl class="dl-horizontal">
         <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
-        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}></dd>
+        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
       </dl>
     </script>
+
+    <script id="product-template" type="text/x-handlebars-template">
+      <h2>List products</h2>
+      <table class="table table-condensed table-striped">
+        <thead>
+          <th>Id</th>
+          <th>Name</th>
+        </thead>
+        <tbody>
+          {{#each}}
+            <tr>
+              <td>{{id}}</td>
+              <td>{{name}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button id="list-previous" class="btn btn-default">Previous</button>
+      <button id="list-next" class="btn btn-default">Next</button>
+
+  </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
