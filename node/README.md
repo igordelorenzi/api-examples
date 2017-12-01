@@ -11,7 +11,7 @@ This command will download all the dependencies required by this example.
 
 ## Configuring
 
-In order to the example to work you must change your credentials in the `app.js` file.
+Before running the example you must change your credentials in the `app.js` file.
 The variables that must be filled with your information are :
 
  - client_id
@@ -33,7 +33,7 @@ Then access the example in the browser in `http://localhost:/8888`
 
 This example uses some dependencies to assist some steps :
 
-  - cookie-parser : used to store and retrieve information on the browser's cookies
-  - express : used to start a node web server
-  - querystring : used to transform js objects to url params
-  - request : used to make requests to the ContaAzul API
+  - [cookie-parser](https://github.com/expressjs/cookie-parser) : stores and retrieves cookies
+  - [express](https://github.com/expressjs/express) : web framework for node
+  - [querystring](https://github.com/Gozala/querystring) : transform js objects in url params
+  - [request](https://github.com/request/request) : make http calls to the ContaAzul API
