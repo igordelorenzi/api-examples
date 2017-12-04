@@ -1,3 +1,5 @@
+import { url } from 'inspector';
+
 var request = require('request'); // "Request" library
 
 module.exports = {
@@ -18,6 +20,23 @@ module.exports = {
       }
     });
 
+  },
+
+  delete : function(req,res) {
+
+    var options = {
+      url: 'https://api.contaazul.com/v1/products/'+ req.query.id,
+      headers: { 'Authorization': 'Bearer ' + req.query.access_token },
+      json: true
+    };
+
+    request.del(options, function(error, response) {
+      if (!error && response.statusCode === 204) {
+        res.send('ok');
+      } else {
+        res.send({ 'error' : error });
+      }
+    });
   }
 
 };

@@ -34,5 +34,7 @@ app.get('/refresh_token', auth.refreshToken);
 
 app.get('/list_products', product.list);
 
+app.get('/delete_product', product.delete);
+
 console.log('Listening on 8888');
 app.listen(8888);
