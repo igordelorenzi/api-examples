@@ -1,5 +1,3 @@
-import { url } from 'inspector';
-
 var request = require('request'); // "Request" library
 
 module.exports = {
