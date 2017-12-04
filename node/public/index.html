@@ -40,6 +40,11 @@
             <tr>
               <td>{{id}}</td>
               <td>{{name}}</td>
+              <td>
+                <button id="delete-product" data-id="{{id}}" type="button" class="btn btn-danger btn-xs">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+              </td>
             </tr>
           {{/each}}
         </tbody>
