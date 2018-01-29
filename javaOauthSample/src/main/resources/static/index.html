@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Oauth 2 Integration - ContaAzul</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div id="login" class="row">
+            <h1>This is an example of the Authorization Code flow</h1>
+            <a id="authorize" href="/user/authorize" class="btn btn-primary">Login ContaAzul</a>
+        </div>
+        <div id="loggedin">
+            <div id="oauth"></div>
+            <button class="btn btn-default" id="obtain-new-token">Refresh token</button>
+            <div id="products"></div>
+        </div>
+    </div>
+
+    <script id="oauth-template" type="text/x-handlebars-template">
+    <h2>oAuth info</h2>
+    <dl class="dl-horizontal">
+        <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
+        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
+    </dl>
+</script>
+
+    <script id="product-template" type="text/x-handlebars-template">
+    <h2>List products</h2>
+    <table class="table table-condensed table-striped">
+        <thead>
+        <th>Id</th>
+        <th>Name</th>
+        </thead>
+        <tbody>
+        {{#each}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+            <td>
+                <button data-id="{{id}}" type="button" class="btn btn-danger btn-xs delete-product">
+                    <span data-id="{{id}}" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+            </td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    <!-- <button id="list-previous" class="btn btn-default">Previous</button>
+    <button id="list-next" class="btn btn-default">Next</button> -->
+
+</script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="./index.js"></script>
+</body>
+
+</html>
