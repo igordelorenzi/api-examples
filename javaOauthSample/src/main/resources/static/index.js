@@ -20,42 +20,40 @@
         if (error) {
             alert('There was an error during the authentication');
             return;
-        } else {
-            if (access_token) {
-                renderLoggedIn(access_token, refresh_token);
-            } else {
-                renderLoggedOut();
-            }
-            initializeComponents(refresh_token);
         }
+
+        if (access_token) {
+            renderLoggedIn(access_token, refresh_token);
+        } else {
+            renderLoggedOut();
+        }
+        initializeComponents(refresh_token);
+
     }
 
     function initializeComponents(refresh_token) {
+        document.getElementById('obtain-new-token').addEventListener('click', refreshToken, false);
+    }
 
-        document.getElementById('obtain-new-token').addEventListener('click', function () {
-            $.ajax({
-                url: '/user/refreshToken',
-                data: {
-                    'refresh_token': refresh_token
-                }
-            }).done(function (data) {
-                if (data.error) {
-                    console.log('Error ' + data.error);
-                } else {
-                    access_token = data.access_token;
-                    refresh_token = data.refresh_token;
+    function refreshToken(){
+        $.ajax({
+            url: '/user/refreshToken',
+            data: {
+                'refresh_token': refresh_token
+            }
+        }).done(function (data) {
+            access_token = data.access_token;
+            refresh_token = data.refresh_token;
 
-                    var oauthData = {
-                        access_token: access_token,
-                        refresh_token: refresh_token
-                    }
+            var oauthData = {
+                access_token: access_token,
+                refresh_token: refresh_token
+            }
 
-                    oauthPlaceholder.innerHTML = oauthTemplate(oauthData);
-                    location.href = location.href.split("?")[0] + "?" + $.param(oauthData);
-
-                }
-            });
-        }, false);
+            oauthPlaceholder.innerHTML = oauthTemplate(oauthData);
+            location.href = location.href.split("?")[0] + "?" + $.param(oauthData);
+        })
+        .error(logError);
     }
 
     function initializeProductComponents() {
@@ -70,7 +68,6 @@
     }
 
     function renderLoggedIn(access_token, refresh_token) {
-        // render oauth info
         oauthPlaceholder.innerHTML = oauthTemplate({
             access_token: access_token,
             refresh_token: refresh_token
@@ -83,7 +80,6 @@
     };
 
     function renderLoggedOut() {
-        // render initial screen
         $('#login').show();
         $('#loggedin').hide();
     }
@@ -108,25 +104,23 @@
     function listProducts(page, size, access_token) {
         $.ajax({ url: '/user/products', data: { 'page': page, 'size': size, 'access_token': access_token } })
             .done(function (data) {
-                if (data.error) {
-                    console.log('Error ' + data.error);
-                } else {
-                    productPlaceholder.innerHTML = productTemplate(data);
-                    initializeProductComponents();
-                }
-            });
+                productPlaceholder.innerHTML = productTemplate(data);
+                initializeProductComponents();
+            })
+            .error(logError);
     }
 
     function deleteProduct(id, access_token) {
         $.ajax({ type: 'DELETE', url: '/user/deleteProduct?' + $.param({ 'id': id, 'access_token': access_token }) })
             .done(function (data) {
-                if (data.error) {
-                    console.log('Error ' + data.error);
-                } else {
-                    page = 0;
-                    listProducts(page, size, access_token);
-                }
-            });
+                page = 0;
+                listProducts(page, size, access_token);
+            })
+            .error(logError);
+    }
+
+    function logError(data) {
+        console.log(data.error)
     }
 
     initialize();

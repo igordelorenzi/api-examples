@@ -21,38 +21,35 @@
     </div>
 
     <script id="oauth-template" type="text/x-handlebars-template">
-    <h2>oAuth info</h2>
-    <dl class="dl-horizontal">
-        <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
-        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
-    </dl>
-</script>
+        <h2>oAuth info</h2>
+        <dl class="dl-horizontal">
+            <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
+            <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
+        </dl>
+    </script>
 
     <script id="product-template" type="text/x-handlebars-template">
-    <h2>List products</h2>
-    <table class="table table-condensed table-striped">
-        <thead>
-        <th>Id</th>
-        <th>Name</th>
-        </thead>
-        <tbody>
-        {{#each}}
-        <tr>
-            <td>{{id}}</td>
-            <td>{{name}}</td>
-            <td>
-                <button data-id="{{id}}" type="button" class="btn btn-danger btn-xs delete-product">
-                    <span data-id="{{id}}" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </button>
-            </td>
-        </tr>
-        {{/each}}
-        </tbody>
-    </table>
-    <!-- <button id="list-previous" class="btn btn-default">Previous</button>
-    <button id="list-next" class="btn btn-default">Next</button> -->
-
-</script>
+        <h2>List products</h2>
+        <table class="table table-condensed table-striped">
+            <thead>
+                <th>Id</th>
+                <th>Name</th>
+            </thead>
+            <tbody>
+                {{#each}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{name}}</td>
+                    <td>
+                        <button data-id="{{id}}" type="button" class="btn btn-danger btn-xs delete-product">
+                            <span data-id="{{id}}" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+    </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
