@@ -191,7 +191,7 @@ class UserController {
     }
 
     /*
-     * Request Conta Azul OAuth 2 tokens
+     * Request ContaAzul OAuth 2 tokens
      * */
     private OAuthData getContaAzulTokens(String url) throws IOException {
         HttpEntity<MultiValueMap<String, String>> httpEntity;
