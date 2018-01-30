@@ -36,8 +36,8 @@ class UserController {
      * List user products
      * */
     @RequestMapping(method = GET, value = "/user/products")
-    public ResponseEntity<?> listProducts(@RequestParam("access_token") String accessToken,
-                                          @RequestParam("page") String page) {
+    public ResponseEntity<Product[]> listProducts(@RequestParam("access_token") String accessToken,
+                                                  @RequestParam("page") String page) {
 
         ResponseEntity<Product[]> productList = null;
 
@@ -58,7 +58,7 @@ class UserController {
             e.printStackTrace();
         }
 
-        return new ResponseEntity<>(productList.getBody(), HttpStatus.OK);
+        return new ResponseEntity<Product[]>(productList.getBody(), HttpStatus.OK);
     }
 
 
