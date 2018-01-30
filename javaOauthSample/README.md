@@ -44,7 +44,6 @@ To run Ngrok on linux, you first need to download the app, and then  to access t
 It will give you a public URL that will redirect all trafic on the 8080 port to your local server.
 You can change the port where it runs, if needed.  This URL is part of the redirect uri(together with '/user/token')
 
-
 #### Importing and running on an IDE (IntelliJ or Eclipse)
 
 Import this project as a maven project in IntelliJ or Eclipse,  then run the JavaOauthSampleApplication class
@@ -63,23 +62,3 @@ To build the deployable artifact you  need to run the following command:
 mvn clean install
 
 The resulting file will be at: target/javaOauthSample-0.0.1-SNAPSHOT.war
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-     
-
-
-
-   
