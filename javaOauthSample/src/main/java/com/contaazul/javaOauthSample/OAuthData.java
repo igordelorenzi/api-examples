@@ -16,10 +16,6 @@ public class OAuthData {
     @JsonProperty("refresh_token")
     private String refreshToken;
 
-    public OAuthData() {
-
-    }
-
     public String getAccessToken() {
         return accessToken;
     }
