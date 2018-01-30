@@ -4,22 +4,22 @@ This project contains a simple application that integrates with ContaAzul APIs u
 
 ## Before you start
 
-Before you run the application, you  need first to get your integration credentials, and redirect uri:
+Before you run the application, you need first to get your integration credentials, and redirect uri:
 
 - client_id
 - client_secret
 - redirect_uri
 
-*** It's very important not to let  you credentials exposed in the frontend or any public place ***
+*** It's very important not to let you credentials exposed in the frontend or any public place ***
 
 For more information on how to get API Credentials go to [http://developers.contaazul.com](http://developers.contaazul.com)
 
-Your redirect uri is the URL to the screen in your application to which the user will be redirect after authorizing the access to ContaAzul API.
+Your redirect uri is the URL to the screen in your application to which the user will be redirected after authorizing the access to ContaAzul API.
 
 ## Running this application:
 
 This application must be accessible through the internet, so ContaAzul servers can redirect the user to it after the authorization proccess.
-You can either deploy this application in a public server, or run locally and use some tool to make the tunneling.
+You can either deploy this application to a public server, or run locally and use some tool to make the tunneling.
 
 ### Configuration that needs to be changed:
 
@@ -32,7 +32,7 @@ In the UserController file there are some changes that need to be made. At the t
 
 ### Running locally
 
-In order to run this example locally you need to create a tunnel which will redirect outside traffic from an especific port 
+In order to run this example locally you need to create a tunnel which will redirect outside traffic from an specific port 
 into your local server correspondent port.
 
 We strongly recommend [NGROCK](https://ngrok.com/). It can be used for free, and is very easy to use.
@@ -57,7 +57,7 @@ mvn spring-boot:run
 
 Before building the application, don't forget to update the UserController with your application and redirect uri.  
 
-To build the deployable artifact you  need to run the following command:
+To build the deployable artifact you need to run the following command:
 
 mvn clean install
 
