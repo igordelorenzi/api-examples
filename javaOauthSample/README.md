@@ -1,6 +1,6 @@
-# Java Conta Azul Integration Example
+# Java ContaAzul Integration Example
 
-This project contains a simple application that integrates with Conta Azul APIs using 0Auth 2 Authentication.
+This project contains a simple application that integrates with ContaAzul APIs using 0Auth 2 Authentication.
 
 ## Before you start
 
@@ -14,19 +14,19 @@ Before you run the application, you  need first to get your integration credenti
 
 For more information on how to get API Credentials go to [http://developers.contaazul.com](http://developers.contaazul.com)
 
-Your redirect uri is the URL to the screen in your application to which the user will be redirect after authorizing the access to Conta Azul API.
+Your redirect uri is the URL to the screen in your application to which the user will be redirect after authorizing the access to ContaAzul API.
 
 ## Running this application:
 
-This application must be accessible through the internet, so Conta Azul servers can redirect the user to it after the authorization proccess.
+This application must be accessible through the internet, so ContaAzul servers can redirect the user to it after the authorization proccess.
 You can either deploy this application in a public server, or run locally and use some tool to make the tunneling.
 
 ### Configuration that needs to be changed:
 
 In the UserController file there are some changes that need to be made. At the top of the file, the following constants:
 
-- CLIENT_ID - set this to the client id received from Conta Azul team
-- CLIENT_SECRET - set this to the client secret received from Conta Azul team
+- CLIENT_ID - set this to the client id received from ContaAzul team
+- CLIENT_SECRET - set this to the client secret received from ContaAzul team
 - REDIRECT_URL - set this to the URL of your server(when deployed), or to the ngrock url (if you are running locally) plus 
 "/user/controller"(i.e. http://01ebaa6e.ngrok.io/user/token)
 
