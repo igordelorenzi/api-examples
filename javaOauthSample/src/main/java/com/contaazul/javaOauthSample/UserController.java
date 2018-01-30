@@ -1,5 +1,7 @@
 package com.contaazul.javaOauthSample;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,8 @@ class UserController {
     private final String CONTAAZUL_TOKEN_URL = "https://api.contaazul.com/oauth2/token";
     private final String CONTAAZUL_PRODUCTS_URL = "https://api.contaazul.com/v1/products/";
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     /*
      * List user products
      * */
@@ -53,9 +57,8 @@ class UserController {
 
 
         } catch (Exception e) {
-            System.out.println("---");
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            logger.error("---");
+            logger.error(e.getMessage());
         }
 
         return new ResponseEntity<Product[]>(productList.getBody(), HttpStatus.OK);
@@ -201,11 +204,9 @@ class UserController {
         OAuthData oAuthData = new OAuthData();
 
         try {
-
             oAuthData = restTemplate.postForObject(url, httpEntity, OAuthData.class);
         } catch (HttpClientErrorException e) {
-            System.out.println(e.getStatusCode());
-            System.out.println(e.getResponseBodyAsString());
+            logger.error((e.getResponseBodyAsString());
         }
 
         return oAuthData;
