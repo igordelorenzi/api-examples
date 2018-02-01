@@ -1,6 +1,10 @@
 package com.contaazul.javaOauthSample;
 
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -92,7 +96,7 @@ class ContaAzulService {
     /*
      *  Builds the token request body
      */
-    public String getRefreshTokenUrl(String refreshToken) throws UnsupportedEncodingException {
+    public String getRefreshTokenUrl(String refreshToken) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(CONTAAZUL_TOKEN_URL)
                 .queryParam("refresh_token", refreshToken)
                 .queryParam("grant_type", "refresh_token");
@@ -102,7 +106,7 @@ class ContaAzulService {
     /*
      *  Builds the token request body
      */
-    public String getTokenUrl(String authorizationCode) throws UnsupportedEncodingException {
+    public String getTokenUrl(String authorizationCode) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(CONTAAZUL_TOKEN_URL)
                 .queryParam("code", authorizationCode)
                 .queryParam("redirect_uri", REDIRECT_URL)
