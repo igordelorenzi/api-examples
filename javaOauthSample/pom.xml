@@ -9,7 +9,7 @@
     <packaging>war</packaging>
 
     <name>javaOauthSample</name>
-    <description>Demo ContaAzul Itegration Using Spring Boot</description>
+    <description>Demo ContaAzul Integration Using Spring Boot</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

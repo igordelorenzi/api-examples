@@ -21,7 +21,7 @@ class ContaAzulService {
     private final String CLIENT_ID = "{YOUR CLIENT ID}";
     private final String CLIENT_SECRET = "{YOUR CLIENT SECRET}";
     private final String CONTAAZUL_AUTH_URL = "https://api.contaazul.com/auth/authorize";
-    private final String REDIRECT_URL = "{YOUR NGROCK OR SERVER URL}/user/token";
+    private final String REDIRECT_URL = "{YOUR NGROK OR SERVER URL}/user/token";
     private final String CONTAAZUL_TOKEN_URL = "https://api.contaazul.com/oauth2/token";
     private final String CONTAAZUL_PRODUCTS_URL = "https://api.contaazul.com/v1/products/";
 
