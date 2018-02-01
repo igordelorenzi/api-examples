@@ -2,10 +2,6 @@ package com.contaazul.javaOauthSample;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Product {
@@ -30,7 +26,7 @@ public class Product {
     private int netWeight;
 
     @JsonProperty("gross_weight")
-    private int grossweight;
+    private int grossWeight;
 
 
     public String getId() {
@@ -113,11 +109,11 @@ public class Product {
         this.netWeight = netWeight;
     }
 
-    public int getGrossweight() {
-        return grossweight;
+    public int getGrossWeight() {
+        return grossWeight;
     }
 
-    public void setGrossweight(int grossweight) {
-        this.grossweight = grossweight;
+    public void setGrossWeight(int grossWeight) {
+        this.grossWeight = grossWeight;
     }
 }
