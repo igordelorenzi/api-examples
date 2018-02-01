@@ -37,7 +37,7 @@ In order to run this example locally you need to create a tunnel which will redi
 
 We strongly recommend [NGROK](https://ngrok.com/). It can be used for free, and is very easy to use.
 
-To run Ngrok on linux, you need to download the app, access the directory where it is placed, and run the following command:
+To run Ngrok on Linux, you need to download the app, access the directory where it is placed, and run the following command:
 
 ./ngrok http 8080
 
@@ -46,7 +46,7 @@ You can change the port where it runs, if needed. This URL is part of the redire
 
 ### Importing and running on an IDE (IntelliJ or Eclipse)
 
-Import this project as a maven project in IntelliJ or Eclipse,  then run the JavaOauthSampleApplication class
+Import this project as a maven project in IntelliJ or Eclipse, then run the JavaOauthSampleApplication class
 (right click + Eclipse:'run as java application' or 'IntelliJ:run JavaOauthSampleApplication main' )
 
 To run from command line, use the following command:
