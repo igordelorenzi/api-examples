@@ -1,12 +1,13 @@
 package com.contaazul.javaOauthSample;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 class UserController {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final String CONTAAZUL_STATE_KEY = "contaazul_auth_state";
 
     @Autowired
@@ -31,12 +31,12 @@ class UserController {
      * assure that the user is coming from your application integration flow
      **/
     @RequestMapping(method = GET, value = "/authorize")
-    public void authorize(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+    public void authorize(HttpServletResponse response, HttpServletRequest request) throws IOException{
 
-        String contaazulState = contaAzulService.generateRandomString();
-        String authorizationUrl = contaAzulService.getRedirectUrl(request, contaazulState);
+        String contaAzulState = contaAzulService.generateRandomString();
+        String authorizationUrl = contaAzulService.getRedirectUrl(request, contaAzulState );
 
-        Cookie cookie = new Cookie(CONTAAZUL_STATE_KEY, contaazulState);
+        Cookie cookie = new Cookie(CONTAAZUL_STATE_KEY, contaAzulState );
         cookie.setPath("/");
 
         response.addCookie(cookie);
@@ -93,7 +93,6 @@ class UserController {
         ResponseEntity<Product[]> productListResponse = contaAzulService.listProducts(accessToken, page);
 
         if (productListResponse.getStatusCode() != HttpStatus.OK) {
-            logger.debug(productListResponse.getBody().toString());
             return new ResponseEntity(productListResponse.getBody().toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<Product[]>(productListResponse.getBody(), HttpStatus.OK);
