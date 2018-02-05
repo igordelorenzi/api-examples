@@ -2,21 +2,9 @@
 
 This project contains a simple application that integrates with ContaAzul APIs using 0Auth 2 Authorization.
 
-## Before you start
-
-Before you run the application, you need to get your integration credentials, and redirect uri:
-
-- client_id
-- client_secret
-- redirect_uri
-
-*** It's very important not to let your credentials exposed in the frontend or any public place ***
-
-For more information on how to get API Credentials go to [http://developers.contaazul.com](http://developers.contaazul.com)
-
 ## Configuring
 
-Before running the example you must change your credentials in the `ContaAzulService.java` file.
+Before running the example you must enter your credentials in the `ContaAzulService.java` file.
 The variables that must be filled with your information are :
 
  - client_id
@@ -25,6 +13,8 @@ The variables that must be filled with your information are :
 
 To get this information you'll need to have an API Credential.
 For more information about how to get an API Credential go to [http://developers.contaazul.com](http://developers.contaazul.com)
+
+*** It's very important not to let your credentials exposed in the frontend or any public place ***
 
 ## Running this application:
 
