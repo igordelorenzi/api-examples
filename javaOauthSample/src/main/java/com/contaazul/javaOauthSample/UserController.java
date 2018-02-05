@@ -58,12 +58,12 @@ class UserController {
             return new ResponseEntity<String>("{error:'Invalid State'}", HttpStatus.UNAUTHORIZED);
         }
 
-        OAuthData oAuthData = contaAzulService.getContaAzulTokens(
+        Token token = contaAzulService.getContaAzulTokens(
                 contaAzulService.getTokenUrl(authorizationCode)
         );
 
         response.sendRedirect(
-                contaAzulService.getHomeUrlWithTokens(request, oAuthData)
+                contaAzulService.getHomeUrlWithTokens(request, token)
         );
         return null;
     }
@@ -72,15 +72,15 @@ class UserController {
      * Get new accessToken using refreshToken
      * */
     @RequestMapping(method = GET, value = "/refreshToken")
-    public ResponseEntity<OAuthData> refreshToken(HttpSession session,
-                                                  HttpServletRequest request,
-                                                  HttpServletResponse response,
-                                                  @RequestParam("refresh_token") String refreshToken) throws Exception {
+    public ResponseEntity<Token> refreshToken(HttpSession session,
+                                              HttpServletRequest request,
+                                              HttpServletResponse response,
+                                              @RequestParam("refresh_token") String refreshToken) throws Exception {
 
-        OAuthData oAuthData = contaAzulService.getContaAzulTokens(
+        Token token = contaAzulService.getContaAzulTokens(
                 contaAzulService.getRefreshTokenUrl(refreshToken)
         );
-        return new ResponseEntity<>(oAuthData, HttpStatus.OK);
+        return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
     /*

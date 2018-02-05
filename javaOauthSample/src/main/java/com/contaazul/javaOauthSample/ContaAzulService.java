@@ -43,27 +43,27 @@ class ContaAzulService {
     /*
      * Request ContaAzul OAuth 2 tokens
      * */
-    public OAuthData getContaAzulTokens(String url) throws IOException {
+    public Token getContaAzulTokens(String url) throws IOException {
         HttpEntity<MultiValueMap<String, String>> httpEntity;
         httpEntity = getTokenRequestConfig();
 
         RestTemplate restTemplate = new RestTemplate();
-        OAuthData oAuthData = restTemplate.postForObject(url, httpEntity, OAuthData.class);
-        return oAuthData;
+        Token token = restTemplate.postForObject(url, httpEntity, Token.class);
+        return token;
     }
 
     /*
      * In our sample application we redirect the user to the initial page, but you don't need to to it.
      * After getting the OAuth2 tokens, you can store them and redirect the user to any of your application's page.
      * */
-    public String getHomeUrlWithTokens(HttpServletRequest request, OAuthData oAuthData) {
+    public String getHomeUrlWithTokens(HttpServletRequest request, Token token) {
         String homeUrl = request.getScheme() + "://" +
                 request.getServerName() + ":" +
                 request.getServerPort();
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(homeUrl)
-                .queryParam("access_token", oAuthData.getAccessToken())
-                .queryParam("refresh_token", oAuthData.getRefreshToken());
+                .queryParam("access_token", token.getAccessToken())
+                .queryParam("refresh_token", token.getRefreshToken());
         return builder.build().toUri().toString();
     }
 

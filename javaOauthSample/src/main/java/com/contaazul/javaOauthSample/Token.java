@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OAuthData {
+public class Token {
 
     @JsonProperty("access_token")
     private String accessToken;
