@@ -15,17 +15,73 @@
       <div id="loggedin">
         <div id="oauth"></div>
         <button class="btn btn-default" id="obtain-new-token">Refresh token</button>
+        <button class="btn btn-default" id="logout">Logout</button>
 
-        <div id="products"></div>
+        <div id="sales"></div>
+        <!-- <div id="invoices"></div> -->
+        <!-- <div id="products"></div> -->
       </div>
     </div>
 
     <script id="oauth-template" type="text/x-handlebars-template">
-      <h2>oAuth info</h2>
+      <h2>OAuth information</h2>
       <dl class="dl-horizontal">
         <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
         <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
       </dl>
+    </script>
+
+    <script id="sales-template" type="text/x-handlebars-template">
+      <h2>Sales List</h2>
+      <button class="btn btn-primary" id="create-sale">Create sale</button>
+      <table class="table table-condensed table-striped">
+        <thead>
+          <th>Id</th>
+          <th>Name</th>
+        </thead>
+        <tbody>
+          {{#each}}
+            <tr>
+              <td>{{id}}</td>
+              <td>{{name}}</td>
+              <td>
+                <button id="delete-sale" data-id="{{id}}" type="button" class="btn btn-danger btn-xs">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button id="list-previous" class="btn btn-default">Previous</button>
+      <button id="list-next" class="btn btn-default">Next</button>
+      <br><br>
+      <button class="btn btn-primary" id="send-invoices">Send invoices</button>
+    </script>
+
+    <script id="invoices-template" type="text/x-handlebars-template">
+      <h2>Invoices List</h2>
+      <table class="table table-condensed table-striped">
+        <thead>
+          <th>Id</th>
+          <th>Name</th>
+        </thead>
+        <tbody>
+          {{#each}}
+            <tr>
+              <td>{{id}}</td>
+              <td>{{name}}</td>
+              <td>
+                <button id="delete-invoice" data-id="{{id}}" type="button" class="btn btn-danger btn-xs">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button id="list-previous" class="btn btn-default">Previous</button>
+      <button id="list-next" class="btn btn-default">Next</button>
     </script>
 
     <script id="product-template" type="text/x-handlebars-template">
@@ -51,8 +107,7 @@
       </table>
       <button id="list-previous" class="btn btn-default">Previous</button>
       <button id="list-next" class="btn btn-default">Next</button>
-
-  </script>
+    </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>

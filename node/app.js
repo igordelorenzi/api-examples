@@ -13,11 +13,9 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
 var auth = require('./app/auth.js');
+var sales = require('./app/sales.js');
+var invoices = require('./app/invoices.js');
 var product = require('./app/product.js');
-
-var client_id = 'CLIENT_ID'; // Your client id
-var client_secret = 'CLIENT_SECRET'; // Your secret
-var redirect_uri = 'REDIRECT_URI'; // Your redirect uri
 
 var stateKey = 'contaazul_auth_state';
 
@@ -27,13 +25,14 @@ app.use(express.static(__dirname + '/public'))
    .use(cookieParser());
 
 app.get('/login', auth.authorize);
-
 app.get('/callback', auth.callback);
-
 app.get('/refresh_token', auth.refreshToken);
 
-app.get('/list_products', product.list);
+app.get('/list_sales', sales.list);
 
+app.get('/list_invoices', invoices.list);
+
+app.get('/list_products', product.list);
 app.get('/delete_product', product.delete);
 
 console.log('Listening on 8888');

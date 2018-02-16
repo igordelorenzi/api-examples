@@ -6,6 +6,14 @@
       oauthTemplate = Handlebars.compile(oauthSource),
       oauthPlaceholder = document.getElementById('oauth');
 
+  var salesSource = document.getElementById('sales-template').innerHTML,
+      salesTemplate = Handlebars.compile(salesSource),
+      salesPlaceholder = document.getElementById('sales');
+
+  var invoicesSource = document.getElementById('invoices-template').innerHTML,
+      invoicesTemplate = Handlebars.compile(invoicesSource),
+      invoicesPlaceholder = document.getElementById('invoices');
+
   var productSource = document.getElementById('product-template').innerHTML,
       productTemplate = Handlebars.compile(productSource),
       productPlaceholder = document.getElementById('products');
@@ -21,12 +29,18 @@
       alert('There was an error during the authentication');
       return;
     } else {
-      if (access_token) {
-        renderLoggedIn(access_token, refresh_token);
+      var code = getParameterByName('code'),
+          state = getParameterByName('state');
+      if (code && state) {
+        window.location = '/callback?code='+code+'&state='+state;
       } else {
-        renderLoggedOut();
+        if (access_token) {
+          renderLoggedIn(access_token, refresh_token);
+        } else {
+          renderLoggedOut();
+        }
+        initializeComponents( refresh_token);
       }
-      initializeComponents( refresh_token);
     }
   }
 
@@ -39,7 +53,9 @@
         }
       }).done(function(data) {
         if( data.error ){
-          console.log('Error ' + data.error);
+          console.log('Error '+data.error);
+          console.log('Error desc. '+data.error_description);
+          renderLoggedOut();
         }else {
           access_token = data.access_token;
           refresh_token = data.refresh_token;
@@ -49,6 +65,53 @@
           });
         }
       });
+    }, false);
+    document.getElementById('logout').addEventListener('click', function() {
+      renderLoggedOut();
+    }, false);
+  }
+
+  function initializeSalesComponents(){
+    document.getElementById('list-next').addEventListener('click', function() {
+      page++;
+      listSales(page, size, access_token);
+    }, false);
+
+    document.getElementById('list-previous').addEventListener('click', function() {
+      if( page !== 0) {
+        page--;
+      }
+      listSales(page, size, access_token);
+    }, false);
+
+    var buttonDelete = document.getElementById('delete-sale');
+    buttonDelete.addEventListener('click', function() {
+      var confirmation = confirm("Are you sure ?");
+      if( confirmation ){
+        deleteSale( buttonDelete.getAttribute('data-id'), access_token);
+      }
+    }, false);
+  }
+
+  function initializeInvoicesComponents(){
+    document.getElementById('list-next').addEventListener('click', function() {
+      page++;
+      listInvoices(page, size, access_token);
+    }, false);
+
+    document.getElementById('list-previous').addEventListener('click', function() {
+      if( page !== 0) {
+        page--;
+      }
+      listInvoices(page, size, access_token);
+    }, false);
+
+    var buttonDelete = document.getElementById('delete-invoice');
+    buttonDelete.addEventListener('click', function() {
+      var confirmation = confirm("Are you sure ?");
+      if( confirmation ){
+        deleteInvoice( buttonDelete.getAttribute('data-id'), access_token);
+      }
     }, false);
   }
 
@@ -81,7 +144,9 @@
       refresh_token: refresh_token
     });
 
-    listProducts( page, size, access_token );
+    listSales( page, size, access_token );
+    // listInvoices( page, size, access_token );
+    // listProducts( page, size, access_token );
 
     $('#login').hide();
     $('#loggedin').show();
@@ -107,6 +172,52 @@
     return hashParams;
   }
 
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  /**
+   * Sales CRUD
+   */
+
+  function listSales(page,size,access_token){
+    $.ajax({ url: '/list_sales', data: { 'page': page, 'size' : size, 'access_token': access_token }})
+    .done(function(data) {
+      if( data.error ){
+        console.log('Error '+data.error);
+        console.log('Error desc. '+data.error_description);
+        renderLoggedOut();
+      }else {
+        salesPlaceholder.innerHTML = salesTemplate( data );
+        initializeSalesComponents();
+      }
+    });
+  }
+
+  /**
+   * Invoice CRUD
+   */
+
+  function listInvoices() {
+    $.ajax({ url: '/list_invoices', data: { 'page': page, 'size' : size, 'access_token': access_token }})
+    .done(function(data) {
+      if( data.error ){
+        console.log('Error '+data.error);
+        console.log('Error desc. '+data.error_description);
+        renderLoggedOut();
+      }else {
+        invoicesPlaceholder.innerHTML = invoicesTemplate( data );
+        initializeInvoicesComponents();
+      }
+    });
+  }
+
   /**
    * Call the Node.js server to list the products
    */
@@ -114,7 +225,9 @@
     $.ajax({ url: '/list_products', data: { 'page': page, 'size' : size, 'access_token': access_token }})
     .done(function(data) {
       if( data.error ){
-        console.log('Error ' + data.error);
+        console.log('Error '+data.error);
+        console.log('Error desc. '+data.error_description);
+        renderLoggedOut();
       }else {
         productPlaceholder.innerHTML = productTemplate( data );
         initializeProductComponents();
@@ -126,7 +239,9 @@
     $.ajax({ url: '/delete_product', data: { 'id': id, 'access_token': access_token }})
     .done(function(data) {
       if( data.error ){
-        console.log('Error ' + data.error);
+        console.log('Error '+data.error);
+        console.log('Error desc. '+data.error_description);
+        renderLoggedOut();
       }else {
         page = 0;
         listProducts( page, size, access_token );

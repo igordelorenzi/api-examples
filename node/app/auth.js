@@ -1,6 +1,7 @@
-var client_id = 'CLIENT_ID'; // Your client id
-var client_secret = 'CLIENT_SECRET'; // Your secret
-var redirect_uri = 'REDIRECT_URI'; // Your redirect uri
+var config = require('../config.js');
+var client_id = config.get('CLIENT_ID'); // Your client id
+var client_secret = config.get('CLIENT_SECRET'); // Your secret
+var redirect_uri = config.get('REDIRECT_URI'); // Your redirect uri
 
 var stateKey = 'contaazul_auth_state';
 
@@ -95,8 +96,12 @@ module.exports = {
     };
 
     request.post(authOptions, function(error, response, body) {
-      if (!error && response.statusCode === 200) {
-        res.send({ 'access_token': body.access_token, 'refresh_token' : body.refresh_token });
+      if (!error) {
+        if (response.statusCode === 200) {
+          res.send({ 'access_token': body.access_token, 'refresh_token' : body.refresh_token });
+        } else {
+          res.send(body);
+        }
       } else {
         res.send({ 'error' : error });
       }
