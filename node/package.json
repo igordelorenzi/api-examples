@@ -8,6 +8,6 @@
     "express": "~4.0.0",
     "nconf": "^0.10.0",
     "querystring": "~0.2.0",
-    "request": "~2.34.0"
+    "request": "~2.88.2"
   }
 }
